@@ -10,6 +10,14 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
+find_package(rosidl_default_generators REQUIRED)
+find_package(mtrx3760 REQUIRED)
+
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "msg/CustomMessage.msg"
+  DEPENDENCIES
+)
+
 
 add_executable(simplePublisher src/simple_publisher.cpp)
 ament_target_dependencies(simplePublisher rclcpp geometry_msgs)
@@ -17,10 +25,24 @@ ament_target_dependencies(simplePublisher rclcpp geometry_msgs)
 add_executable(simpleSubscriber src/simple_subscriber.cpp)
 ament_target_dependencies(simpleSubscriber rclcpp geometry_msgs)
 
+add_executable(simplePublisherCustom src/simple_publisher_custom.cpp)
+ament_target_dependencies(simplePublisherCustom rclcpp mtrx3760)
+
+add_executable(simpleSubscriberCustom src/simple_subscriber_custom.cpp)
+ament_target_dependencies(simpleSubscriberCustom rclcpp mtrx3760)
+
 install(TARGETS
   simplePublisher
   simpleSubscriber
+  simplePublisherCustom
+  simpleSubscriberCustom
   DESTINATION lib/${PROJECT_NAME}
+)
+
+# Install launch files.
+install(DIRECTORY
+  launch
+  DESTINATION share/${PROJECT_NAME}/
 )
 
 ament_package()
