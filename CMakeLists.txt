@@ -45,6 +45,12 @@ ament_target_dependencies(frameListener rclcpp tf2 tf2_ros)
 add_executable(timeTraveller src/time_traveller.cpp)
 ament_target_dependencies(timeTraveller rclcpp tf2 tf2_ros)
 
+add_executable(nodeWithParam src/node_with_param.cpp)
+ament_target_dependencies(nodeWithParam rclcpp tf2 tf2_ros)
+
+add_executable(dynamicReconfiguration src/dynamic_reconfiguration.cpp)
+ament_target_dependencies(dynamicReconfiguration rclcpp tf2 tf2_ros)
+
 install(TARGETS
   simplePublisher
   simpleSubscriber
@@ -54,6 +60,8 @@ install(TARGETS
   dynamicBroadcast
   frameListener
   timeTraveller
+  nodeWithParam
+  dynamicReconfiguration
   DESTINATION lib/${PROJECT_NAME}
 )
 
