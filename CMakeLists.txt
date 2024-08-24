@@ -12,6 +12,8 @@ find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 find_package(mtrx3760 REQUIRED)
+find_package(tf2 REQUIRED)
+find_package(tf2_ros REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/CustomMessage.msg"
@@ -31,11 +33,27 @@ ament_target_dependencies(simplePublisherCustom rclcpp mtrx3760)
 add_executable(simpleSubscriberCustom src/simple_subscriber_custom.cpp)
 ament_target_dependencies(simpleSubscriberCustom rclcpp mtrx3760)
 
+add_executable(staticBroadcast src/static_broadcast.cpp)
+ament_target_dependencies(staticBroadcast rclcpp tf2 tf2_ros)
+
+add_executable(dynamicBroadcast src/dynamic_broadcast.cpp)
+ament_target_dependencies(dynamicBroadcast rclcpp tf2 tf2_ros)
+
+add_executable(frameListener src/frame_listener.cpp)
+ament_target_dependencies(frameListener rclcpp tf2 tf2_ros)
+
+add_executable(timeTraveller src/time_traveller.cpp)
+ament_target_dependencies(timeTraveller rclcpp tf2 tf2_ros)
+
 install(TARGETS
   simplePublisher
   simpleSubscriber
   simplePublisherCustom
   simpleSubscriberCustom
+  staticBroadcast
+  dynamicBroadcast
+  frameListener
+  timeTraveller
   DESTINATION lib/${PROJECT_NAME}
 )
 
