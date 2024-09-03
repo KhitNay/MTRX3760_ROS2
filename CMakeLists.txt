@@ -14,9 +14,13 @@ find_package(rosidl_default_generators REQUIRED)
 find_package(mtrx3760 REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
+find_package(example_interfaces REQUIRED)
+find_package(action_msgs REQUIRED)
+find_package(rclcpp_action REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/CustomMessage.msg"
+  "action/MoveRobot.action"
   DEPENDENCIES
 )
 
@@ -51,6 +55,18 @@ ament_target_dependencies(nodeWithParam rclcpp tf2 tf2_ros)
 add_executable(dynamicReconfiguration src/dynamic_reconfiguration.cpp)
 ament_target_dependencies(dynamicReconfiguration rclcpp tf2 tf2_ros)
 
+add_executable(serviceServer src/service_server.cpp)
+ament_target_dependencies(serviceServer rclcpp example_interfaces)
+
+add_executable(serviceClient src/service_client.cpp)
+ament_target_dependencies(serviceClient rclcpp example_interfaces)
+
+add_executable(actionServer src/action_server.cpp)
+ament_target_dependencies(actionServer rclcpp mtrx3760 action_msgs rclcpp_action)
+
+add_executable(actionClient src/action_client.cpp)
+ament_target_dependencies(actionClient rclcpp mtrx3760 action_msgs rclcpp_action)
+
 install(TARGETS
   simplePublisher
   simpleSubscriber
@@ -62,6 +78,10 @@ install(TARGETS
   timeTraveller
   nodeWithParam
   dynamicReconfiguration
+  serviceServer
+  serviceClient
+  actionServer
+  actionClient
   DESTINATION lib/${PROJECT_NAME}
 )
 
