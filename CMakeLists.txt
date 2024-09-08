@@ -17,6 +17,8 @@ find_package(tf2_ros REQUIRED)
 find_package(example_interfaces REQUIRED)
 find_package(action_msgs REQUIRED)
 find_package(rclcpp_action REQUIRED)
+find_package(rclcpp_lifecycle REQUIRED)
+find_package(lifecycle_msgs REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/CustomMessage.msg"
@@ -67,6 +69,9 @@ ament_target_dependencies(actionServer rclcpp mtrx3760 action_msgs rclcpp_action
 add_executable(actionClient src/action_client.cpp)
 ament_target_dependencies(actionClient rclcpp mtrx3760 action_msgs rclcpp_action)
 
+add_executable(lifecycleNode src/lifecycle_node.cpp)
+ament_target_dependencies(lifecycleNode rclcpp_lifecycle std_msgs lifecycle_msgs)
+
 install(TARGETS
   simplePublisher
   simpleSubscriber
@@ -82,6 +87,7 @@ install(TARGETS
   serviceClient
   actionServer
   actionClient
+  lifecycleNode
   DESTINATION lib/${PROJECT_NAME}
 )
 
