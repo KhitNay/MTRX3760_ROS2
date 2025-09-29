@@ -107,6 +107,10 @@ add_executable(moveForwardClient src/move_forward_client.cpp)
 ament_target_dependencies(moveForwardClient rclcpp geometry_msgs)
 target_link_libraries(moveForwardClient ${cpp_typesupport_target})
 
+add_executable(strategy src/strategy.cpp)
+ament_target_dependencies(strategy rclcpp std_msgs)
+
+
 install(TARGETS
   simplePublisher
   simpleSubscriber
@@ -129,6 +133,7 @@ install(TARGETS
   navigate
   moveForwardServer
   moveForwardClient
+  strategy
   DESTINATION lib/${PROJECT_NAME}
 )
 
