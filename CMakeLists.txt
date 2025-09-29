@@ -11,7 +11,6 @@ find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
-find_package(mtrx3760 REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(example_interfaces REQUIRED)
@@ -32,6 +31,8 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   DEPENDENCIES
 )
 
+ament_export_dependencies(rosidl_default_runtime)
+rosidl_get_typesupport_target(cpp_typesupport_target ${PROJECT_NAME} "rosidl_typesupport_cpp")
 
 add_executable(simplePublisher src/simple_publisher.cpp)
 ament_target_dependencies(simplePublisher rclcpp geometry_msgs)
@@ -40,10 +41,12 @@ add_executable(simpleSubscriber src/simple_subscriber.cpp)
 ament_target_dependencies(simpleSubscriber rclcpp geometry_msgs)
 
 add_executable(simplePublisherCustom src/simple_publisher_custom.cpp)
-ament_target_dependencies(simplePublisherCustom rclcpp mtrx3760)
+ament_target_dependencies(simplePublisherCustom rclcpp)
+target_link_libraries(simplePublisherCustom ${cpp_typesupport_target})
 
 add_executable(simpleSubscriberCustom src/simple_subscriber_custom.cpp)
-ament_target_dependencies(simpleSubscriberCustom rclcpp mtrx3760)
+ament_target_dependencies(simpleSubscriberCustom rclcpp)
+target_link_libraries(simpleSubscriberCustom ${cpp_typesupport_target})
 
 add_executable(staticBroadcast src/static_broadcast.cpp)
 ament_target_dependencies(staticBroadcast rclcpp tf2 tf2_ros)
@@ -70,10 +73,12 @@ add_executable(serviceClient src/service_client.cpp)
 ament_target_dependencies(serviceClient rclcpp example_interfaces)
 
 add_executable(actionServer src/action_server.cpp)
-ament_target_dependencies(actionServer rclcpp mtrx3760 action_msgs rclcpp_action)
+ament_target_dependencies(actionServer rclcpp action_msgs rclcpp_action)
+target_link_libraries(actionServer ${cpp_typesupport_target})
 
 add_executable(actionClient src/action_client.cpp)
-ament_target_dependencies(actionClient rclcpp mtrx3760 action_msgs rclcpp_action)
+ament_target_dependencies(actionClient rclcpp action_msgs rclcpp_action)
+target_link_libraries(actionClient ${cpp_typesupport_target})
 
 add_executable(lifecycleNode src/lifecycle_node.cpp)
 ament_target_dependencies(lifecycleNode rclcpp_lifecycle std_msgs lifecycle_msgs)
