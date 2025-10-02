@@ -66,7 +66,6 @@ class SafeVelocityDecorator : public VelocityPublisherDecorator
 {
     public:
         SafeVelocityDecorator(const std::shared_ptr<VelocityPublisher>& publisher);
-
         void publish(double linearX) override;
 };
 
@@ -89,7 +88,6 @@ class DecoratorNode : public rclcpp::Node
         rclcpp::ParameterCallbackHandle::SharedPtr safeHandle;
         rclcpp::ParameterCallbackHandle::SharedPtr forwardHandle;
 };
-
 
 int main(int argc, char** argv)
 {
@@ -170,13 +168,14 @@ void DecoratorNode::rebuildChain()
     bool safe_enabled = get_parameter("safe_vel").as_bool();
     bool forward_enabled = get_parameter("forward_vel").as_bool();
 
-    if (forward_enabled) {
+    if (forward_enabled)
+    {
         publisher = std::make_shared<ForwardVelocityDecorator>(publisher);
     }
-    if (safe_enabled) {
+    if (safe_enabled)
+    {
         publisher = std::make_shared<SafeVelocityDecorator>(publisher);
     }
-
 
     RCLCPP_INFO(get_logger(), "Rebuilt publisher: forward=%d safe=%d",
                 forward_enabled, safe_enabled);
