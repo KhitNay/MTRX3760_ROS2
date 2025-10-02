@@ -113,6 +113,9 @@ ament_target_dependencies(strategy rclcpp std_msgs)
 add_executable(decorator src/decorator.cpp)
 ament_target_dependencies(decorator rclcpp geometry_msgs)
 
+add_executable(factory src/factory.cpp)
+ament_target_dependencies(factory rclcpp std_msgs)
+
 
 install(TARGETS
   simplePublisher
@@ -138,6 +141,7 @@ install(TARGETS
   moveForwardClient
   strategy
   decorator
+  factory
   DESTINATION lib/${PROJECT_NAME}
 )
 
