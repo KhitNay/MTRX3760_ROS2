@@ -2,8 +2,22 @@
 The Factory Design pattern simplifies how an object gets created
 The following example polymorphically creates a motor for a robot based on a ROS param.
 
+A factory pattern has the followng classes
+    - An abstract producible class
+    - Concrete producible classes
+    - A factory class that creates concrete classes
+    - A client class that consumes the factory class
+
 std::cout is used to demonstrate the motors operating but these should be avoided
 in a real application
+
+May appear similar to the strategy pattern.
+Factory = how the object gets made.
+Strategy = how the object behaves.
+
+To test:
+    - ros2 run mtrx3760 factory --ros-args -p motor_type:=dc (or)
+    - ros2 run mtrx3760 factory --ros-args -p motor_type:=servo
 
 By Khit Nay 2025
 */
